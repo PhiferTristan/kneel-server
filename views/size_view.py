@@ -1,7 +1,7 @@
 import sqlite3
 import json
 from nss_handler import status
-from repository import db_get_single, db_get_all, db_update
+from repository import db_get_single, db_get_all
 
 class SizesView():
 
