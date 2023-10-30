@@ -19,16 +19,4 @@ class SizesView():
             serialized_sizes = json.dumps(sizes)
 
             return handler.response(serialized_sizes, status.HTTP_200_SUCCESS.value)
-
-    def update(self, handler, size_data, pk):
-        sql = "UPDATE Sizes SET carets = ?, price = ? WHERE id = ?"
-        row_updated = db_update(sql, (size_data['carets'], size_data['price'], pk))
-
-        if row_updated > 0:
-            return handler.response("The size has been updated :)", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value)
-        else:
-            return handler.response("Size not found :(", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
-
-    def delete(self, handler):
-        return handler.response("Unsupported Method!", status.HTTP_405_UNSUPPORTED_METHOD.value)
-    
+   
