@@ -1,7 +1,7 @@
 import sqlite3
 import json
 from nss_handler import status
-from repository import db_get_single, db_get_all
+from repository import db_get_single, db_get_all, db_update
 
 class SizesView():
 
@@ -19,4 +19,4 @@ class SizesView():
             serialized_sizes = json.dumps(sizes)
 
             return handler.response(serialized_sizes, status.HTTP_200_SUCCESS.value)
-        
+   

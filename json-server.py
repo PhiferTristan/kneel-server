@@ -18,6 +18,39 @@ class JSONServer(HandleRequests):
         except AttributeError:
             return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
+    def do_PUT(self):
+        self.response("You can't do that! Method NOT ALLOWED!!", status.HTTP_405_UNSUPPORTED_METHOD.value)
+
+    def do_DELETE(self):
+        url = self.parse_url(self.path)
+        view = self.determine_view(url)
+        if "orders" not in self.path:
+            return self.response("Method not allowed!", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        else:
+            try:
+                view.delete(self, url)
+            except AttributeError:
+                return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
+    def do_POST(self):
+        # Parse the URL
+        url = self.parse_url(self.path)
+        # Determine the correct view needed to handle the requests
+        view = self.determine_view(url)
+        if "orders" not in self.path:
+            return self.response("Method not allowed!", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        else:
+        # Get the request body
+            content_len = int(self.headers.get('content-length', 0))
+            request_body = self.rfile.read(content_len)
+            post_data = json.loads(request_body)
+            # Invoke the correct method on the view
+            try:
+                view.create(self, post_data)
+            except AttributeError:
+                return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
+
     def determine_view(self, url):
         """Lookup the correct view class to handle the requested route
 
@@ -48,43 +81,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-    # def do_PUT(self):
-    #     url = self.parse_url(self.path)
-    #     view = self.determine_view(url)
-
-    #     try:
-    #         view.update(self, self.get_request_body(), url["pk"])
-    #     except AttributeError:
-    #         return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
-
-    # def do_POST(self):
-    #     # Parse the URL
-    #     url = self.parse_url(self.path)
-    #     # Determine the correct view needed to handle the requests
-    #     view = self.determine_view(url)
-    #     # Get the request body
-    #     content_len = int(self.headers.get('content-length', 0))
-    #     request_body = self.rfile.read(content_len)
-    #     post_data = json.loads(request_body)
-    #     # Invoke the correct method on the view
-    #     try:
-    #         view.create(self, post_data)
-    #     # Make sure you handle the AttributeError in case the client requested a route that you don't support
-    #     except AttributeError:
-    #         return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
-
-    #     # Once you implement this method, delete the following line of code
-    #     # return self.response("", status.HTTP_405_UNSUPPORTED_METHOD.value)
-
-    # def do_DELETE(self):
-    #     url = self.parse_url(self.path)
-    #     view = self.determine_view(url)
-
-    #     try:
-    #         view.delete(self, url)
-    #     except AttributeError:
-    #         return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
