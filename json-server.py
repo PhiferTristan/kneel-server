@@ -4,7 +4,7 @@ from nss_handler import HandleRequests, status
 
 
 # Add your imports below this line
-from views import SizesView, MetalsView
+from views import SizesView, MetalsView, StylesView
 
 
 class JSONServer(HandleRequests):
@@ -63,7 +63,8 @@ class JSONServer(HandleRequests):
         try:
             routes = {
                 "sizes": SizesView,
-                "metals": MetalsView
+                "metals": MetalsView,
+                "styles": StylesView
             }
 
             matching_class = routes[url["requested_resource"]]
