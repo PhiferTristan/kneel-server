@@ -15,7 +15,7 @@ def db_get_single(sql,pk) -> sqlite3.Row:
         db_cursor = conn.cursor()
         db_cursor.execute(sql, (pk,))
         return db_cursor.fetchone()
-    
+
 def db_get_all(sql) -> list:
     """Retrieve all rows from a database table
 
@@ -30,3 +30,19 @@ def db_get_all(sql) -> list:
         db_cursor = conn.cursor()
         db_cursor.execute(sql)
         return db_cursor.fetchall()
+
+def db_update(sql, data_tuple) -> int:
+    """Update a row in a database table
+
+    Args:
+        sql (string): SQL string
+        data_tuple (tuple): Tuple containing all data values to be mapped to parameters in the SQL string
+
+    Returns:
+        int: Number of rows updated
+    """
+    with sqlite3.connect("./kneeldiamonds.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        db_cursor.execute(sql, data_tuple)
+        return db_cursor.rowcount
