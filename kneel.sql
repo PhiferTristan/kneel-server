@@ -57,6 +57,13 @@ INSERT INTO 'Sizes' VALUES (null, 2, 3638);
 INSERT INTO 'Styles' VALUES (null, "Classic", 500);
 INSERT INTO 'Styles' VALUES (null, "Modern", 710);
 INSERT INTO 'Styles' VALUES (null, "Vintage", 965);
+
+INSERT INTO Orders (metal_id, size_id, style_id) VALUES (1, 3, 2);
+INSERT INTO Orders (metal_id, size_id, style_id) VALUES (2, 4, 1);
+INSERT INTO Orders (metal_id, size_id, style_id) VALUES (3, 2, 3);
+INSERT INTO Orders (metal_id, size_id, style_id) VALUES (4, 5, 2);
+INSERT INTO Orders (metal_id, size_id, style_id) VALUES (5, 1, 1);
+
 -- End block
 
 
