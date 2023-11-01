@@ -66,6 +66,20 @@ INSERT INTO Orders (metal_id, size_id, style_id) VALUES (5, 1, 1);
 
 -- End block
 
+SELECT
+    o.id,
+    o.metal_id,
+    o.size_id,
+    o.style_id,
+    s.carets AS size_carets,
+    s.price AS size_price
+FROM
+    Orders o
+LEFT JOIN
+    Sizes s ON o.size_id = s.id
+WHERE
+    o.id = 1
+
 
 
 
